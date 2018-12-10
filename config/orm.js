@@ -5,15 +5,15 @@ var connection = require("../connection.js");
 
 var orm = {
   //Select all from the burgers tables
-  selectAll: function(callback) {
+  selectAll: function(cb) {
     connection.query("SELECT * FROM burgers", function(err, result) {
       if (err) throw err;
-      callback(result);
+      cb(result);
     });
   },
 
   //insert a record into the burgers table with the burger name & false for devoured field
-  insertOne: function(callback) {
+  insertOne: function(cb) {
     connection.query(
       "INSERT INTO burgers SET ?",
       {
@@ -22,19 +22,19 @@ var orm = {
       },
       function(err, result) {
         if (err) throw err;
-        callback(result);
+        cb(result);
       }
     );
   },
 
   //update an existing record & change the devoured column from false to true for a given burger
-  updateOne: function(callback) {
+  updateOne: function(cb) {
     connection.query(
       "UPDATE burgers SET ? WHERE ?",
       [{ devoured: true }, { id: burgerID }],
       function(err, result) {
         if (err) throw err;
-        callback(result);
+        cb(result);
       }
     );
   }
