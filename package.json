@@ -16,6 +16,9 @@
     "node",
     "mysql"
   ],
+  "script":{
+    "start": "node server.js"
+  },
   "author": "Jobi Mathai",
   "license": "MIT",
   "bugs": {
