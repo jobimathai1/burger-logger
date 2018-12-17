@@ -1,23 +1,29 @@
-var orm = require("../config/orm.js");
+/*
+Here is where you setup a model for how to interface with the database.
+*/
+
+var orm = require('../config/orm.js');
 
 var burger = {
-	SelectAll: function(cb){
-		orm.selectAll("burgers", function(res){
+	all: function (cb) {     
+		orm.all('burgers', function (res) {
 			cb(res);
-		})
-	},
-
-	updateOne: function(col, newVal, condition, cb) {
-		orm.updateOne("burgers", col, newVal, condition, function(res){
-			cb(res);
+			console.log("returning all burgers")
 		});
 	},
-
-	insertOne: function(col, val, cb) {
-		orm.insertOne("burgers", col, val, function(res){
+	// cols and vals are arrays
+	create: function (column, values, cb) {
+		orm.create('burgers',column,values, function (res) {
 			cb(res);
+			console.log("created new burger")
+		});
+	},
+	update: function (column, newValue, condition, cb) {
+		orm.update('burgers', column, newValue, condition, function (res) {
+			cb(res);
+			console.log("the burger is now devoured")
 		});
 	}
-}
+};
 
 module.exports = burger;

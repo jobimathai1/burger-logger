@@ -1,28 +1,32 @@
-var express = require("express");
-
-var PORT = process.env.PORT || 3000;
+var express = require('express');
+var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 var app = express();
 
-// var db = require("./models");
-
 // Serve static content for the app from the "public" directory in the application directory.
-app.use(express.static("public"));
+app.use(express.static(process.cwd() + '/public'));
 
-// Parse application body as JSON
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(bodyParser.urlencoded({
+	extended: false
+}));
 
-// Set Handlebars.
-var exphbs = require("express-handlebars");
 
-app.engine("handlebars", exphbs({ defaultLayout: "main" }));
-app.set("view engine", "handlebars");
+// override with POST having ?_method=
+app.use(methodOverride('_method'));
+var exphbs = require('express-handlebars');
+app.engine('handlebars', exphbs({
+	defaultLayout: 'main'
+}));
+app.set('view engine', 'handlebars');
 
+
+//Routes
 var routes = require('./controllers/burgers_controller.js');
 app.use('/', routes);
 
-// Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
-  console.log("App listening on PORT: " + PORT);
+app.set('port', (process.env.PORT || 3000));
+
+app.listen(app.get('port'), function () {
+	console.log('App listening on PORT ', app.get('port'));
 });

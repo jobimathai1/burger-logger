@@ -1,29 +1,36 @@
-var express = require("express");
+/*
+Here is where you create all the 
+functions that will do the routing for your app, 
+and the logic of each route.
+*/
+var express = require('express');
 var router = express.Router();
+var burgers = require('../models/burger.js');
 
-//import burger model
-var burger = require("../models/burger");
-
-// Create all our routes and set up logic within those routes where required.
-router.get("/", function(req, res) {
-	burger.SelectAll(function(burger_data) {
-		console.log(burger_data);
-		res.render("index", {burger_data});
+//Route to get all the burgers created and stored in the database
+router.get('/', function (req, res) {
+	burgers.all(function (data) {
+		console.log(data)
+		var hbsObject = { burgers: data };
+		console.log(hbsObject);
+		res.render('index', hbsObject);
 	});
 });
 
-router.post("/api/create", function(req, res) {
-	burger.insertOne("burger_name", [req.body.burger_name], function() {
-    res.redirect('/');
+//Route to create a new burger and add it to the list
+router.post('/api/create', function (req, res) {
+	burgers.create('burger_name', [req.body.name], function () {
+		res.redirect('/');
 	});
 });
 
-router.put("/api/update:id", function(req, res) {
-  var condition = "id =" + req.params.id;
-  console.log("condition", condition);
-  burger.updateOne('devoured', req.body.devoured, condition, function(){
-    res.redirect('/');
-  });
+//Route to move the burger from undevoured to devoured
+router.put('/api/update/:id', function (req, res) {
+	var condition = 'id = ' + req.params.id;
+	console.log('condition', condition);
+	burgers.update('devoured',req.body.devoured,condition, function () {
+		res.redirect('/');
+	});
 });
 
-  module.exports = router;
+module.exports = router;
