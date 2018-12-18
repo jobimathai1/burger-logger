@@ -1,6 +1,6 @@
 # burger-logger
 
-This app is built using, NodeJS, Handlebars, MySQL. The app is hosted on heroku (https://salty-refuge-36564.herokuapp.com/burgers)
+This app is built using, NodeJS, Handlebars, MySQL. The app is hosted on heroku (https://salty-refuge-36564.herokuapp.com/)
 
 When going to the app, either on Heroku on localhost. The user is presented with burgers waiting to be devoured (assuming the seed file was used to insert into the burgers table).
 
